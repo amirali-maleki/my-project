@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خوش آمدید</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #e9f5ff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .welcome-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #007bff; }
+    </style>
+</head>
+<body>
+
+<div class="welcome-box">
+    <h1><span id="userGreeting">کاربر</span> عزیز، خوش آمدید! 🎉</h1>
+    <p>ثبت نام شما با موفقیت در دیتابیس انجام شد.</p>
+</div>
+
+<script>
+    // خواندن نام کاربر از حافظه مرورگر
+    const name = localStorage.getItem('username') || 'کاربر';
+    document.getElementById('userGreeting').innerText = name;
+</script>
+
+</body>
+</html>

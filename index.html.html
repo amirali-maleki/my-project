@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت نام</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background-color: #f4f4f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .form-container { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 300px; }
+        h2 { text-align: center; color: #333; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #218838; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>فرم ثبت نام</h2>
+    <form id="signupForm">
+        <input type="text" id="fullName" placeholder="نام و نام خانوادگی" required>
+        <input type="email" id="email" placeholder="ایمیل" required>
+        <input type="password" id="password" placeholder="رمز عبور" required>
+        <button type="submit">ثبت نام</button>
+    </form>
+</div>
+
+<script>
+    // تنظیمات دیتابیس (آدرس‌های خودتان را جایگزین کنید)
+    const SUPABASE_URL = "https://myaigkwzgdrtuuztumns.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_Y8F1wv1A0gcv418a0TVpJw_qHISJOJT";
+    
+    // نام متغیر را تغییر دادیم تا با کتابخانه تداخل نداشته باشد
+    const mySupabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // فرستادن اطلاعات به دیتابیس
+        const { data, error } = await mySupabase
+            .from('users_list') 
+            .insert([{ full_name: fullName, email: email, password: password }]);
+
+        if (error) {
+            alert("خطا در ثبت نام: " + error.message);
+        } else {
+            // ذخیره نام برای صفحه بعد و انتقال به صفحه خوش‌آمدگویی
+            localStorage.setItem('username', fullName);
+            window.location.href = 'welcome.html';
+        }
+    });
+</script>
+
+</body>
+</html>
